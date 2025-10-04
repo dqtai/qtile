@@ -4,11 +4,22 @@ set -e
 echo "🚀 Actualizando sistema..."
 sudo apt update && sudo apt upgrade -y
 
-echo "📦 Instalando dependencias de Qtile Wayland..."
-sudo apt install -y git build-essential python3 python3-pip python3-setuptools python3-wheel \
-python3-cffi python3-xcffib libwlroots-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev \
-pkg-config python3-pywlroots libegl1-mesa-dev libgbm-dev libinput-dev libxkbcommon-dev \
-libx11-dev libxcb1-dev libxcb-composite0-dev
+echo "📦 Instalando dependencias generales y herramientas de compilación..."
+sudo apt install -y build-essential git python3 python3-pip python3-setuptools python3-wheel \
+libxkbcommon-dev libwayland-dev libcairo2-dev libpango1.0-dev libgdk-pixbuf2.0-dev \
+cmake pkg-config python3-dev libegl1-mesa-dev libgbm-dev libinput-dev libx11-dev libxcb1-dev
+
+echo "📥 Instalando libwlroots-dev desde repositorio experimental..."
+# Añadir temporalmente repositorio experimental
+echo "deb http://deb.debian.org/debian/ experimental main" | sudo tee /etc/apt/sources.list.d/experimental.list
+sudo apt update
+sudo apt install -t experimental -y libwlroots-dev
+# Eliminar repositorio experimental
+sudo rm /etc/apt/sources.list.d/experimental.list
+sudo apt update
+
+echo "📥 Instalando python3-pywlroots desde pip..."
+pip install pywlroots
 
 echo "📥 Clonando repositorio de Qtile..."
 cd ~
@@ -25,9 +36,9 @@ echo "⚙️ Instalando Qtile en modo editable..."
 pip install -e .
 
 echo "🖥 Instalando programas adicionales..."
-# Rofi y su versión Wayland (uofi)
-sudo apt install -y wofi
-# Picom (para transparencias sobre Xwayland, opcional en Wayland)
+# Lanzador Wayland y X11
+sudo apt install -y rofi wofi
+# Picom (opcional sobre Xwayland)
 sudo apt install -y picom
 # Terminal Kitty
 sudo apt install -y kitty
