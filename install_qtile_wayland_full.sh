@@ -6,7 +6,7 @@ sudo apt update && sudo apt upgrade -y
 
 echo "📦 Instalando dependencias generales y herramientas de compilación..."
 sudo apt install -y build-essential git python3 python3-pip python3-setuptools python3-wheel \
-libxkbcommon-dev libwayland-dev libcairo2-dev libpango1.0-dev libgdk-pixbuf2.0-dev \
+libxkbcommon-dev libwayland-dev libcairo2-dev libpango1.0-dev libgdk-pixbuf-2.0-dev \
 cmake pkg-config python3-dev libegl1-mesa-dev libgbm-dev libinput-dev libx11-dev libxcb1-dev
 
 echo "📥 Instalando libwlroots-dev desde repositorio experimental..."
